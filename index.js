@@ -7,7 +7,7 @@ import userRouter from "./routes/users.js";
 
 
 
-// dotenv.config()
+dotenv.config()
 
 // create Db connection
 const connectionString = process.env.MONGO_URI;
