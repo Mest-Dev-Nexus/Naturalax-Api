@@ -1,13 +1,13 @@
 import jwt from "jsonwebtoken";
 import { expressjwt } from "express-jwt";
 import { UserModel } from "../models/users.js";
-import dotenv from "dotenv";
+// import dotenv from "dotenv";
 
-dotenv.config()
+// dotenv.config()
 
 // Middleware to check if user is authenticated using express-jwt
 export const isAuthenticated = expressjwt({
-    secret: process.env.JWT_SECRET_KEY,
+    secret: process.env.JWT_SECRET,
     algorithms: ['HS256']
   });
   
