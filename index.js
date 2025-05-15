@@ -33,7 +33,7 @@ app.use("/api/v1", productRouter);
 app.use("/api/v1", userRouter);
 
 // listen for incoming request
-const port = process.env.PORT || 6190;
+const port = process.env.PORT || 7019;
 app.listen(port, () => {
   console.log(`Server is listening on port ${port}`);
 });
