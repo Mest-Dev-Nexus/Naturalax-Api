@@ -1,13 +1,11 @@
 import express from "express";
-import "dotenv/config";
+import dotenv from "dotenv";
 import productRouter from "./routes/products.js";
 import mongoose from "mongoose";
 import cors from "cors";
 import userRouter from "./routes/users.js";
 
-
-
-dotenv.config()
+dotenv.config();
 
 // create Db connection
 const connectionString = process.env.MONGO_URI;
@@ -37,5 +35,5 @@ app.use("/api/v1", userRouter);
 // listen for incoming request
 const port = process.env.PORT || 6190;
 app.listen(port, () => {
-    console.log(`Server is listening on port ${port}`);
+  console.log(`Server is listening on port ${port}`);
 });
