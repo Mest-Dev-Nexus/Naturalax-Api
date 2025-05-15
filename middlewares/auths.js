@@ -1,13 +1,13 @@
 import jwt from "jsonwebtoken";
 import { expressjwt } from "express-jwt";
 import { UserModel } from "../models/users.js";
-// import dotenv from "dotenv";
+import dotenv from "dotenv";
 
-// dotenv.config()
+dotenv.config()
 
 // Middleware to check if user is authenticated using express-jwt
 export const isAuthenticated = expressjwt({
-  secret: process.env.JWT_SECRET,
+  secret: process.env.JWT_SECRET_KEY,
   algorithms: ["HS256"],
 });
 
@@ -45,7 +45,7 @@ export const jwtAuth = (req, res, next) => {
     return res.status(401).json({ message: "Access token not provided" });
   }
 
-  jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
+  jwt.verify(token, process.env.JWT_SECRET_KEY, (err, decoded) => {
     if (err) {
       return res.status(401).json({ message: "Invalid token", error: err });
     }
