@@ -4,7 +4,6 @@ import { UserModel } from "../models/users.js";
 import dotenv from "dotenv";
 
 dotenv.config()
-
 // Middleware to check if user is authenticated using express-jwt
 export const isAuthenticated = expressjwt({
   secret: process.env.JWT_SECRET_KEY,
