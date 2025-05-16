@@ -32,6 +32,6 @@ app.use("/api/v1", userRouter);
 
 // listen for incoming request
 const port = process.env.PORT || 7019;
-app.listen(port, () => {
+app.listen(port, '0.0.0.0', () => {
   console.log(`Server is listening on port ${port}`);
 });
