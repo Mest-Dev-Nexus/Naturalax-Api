@@ -34,3 +34,19 @@ export const productPicturesUpload = multer({
             }
         }),
     });
+    export const adminPictureUpload = multer({
+  storage: new CloudinaryStorage({
+      cloudinary,
+      params: {
+          folder: 'ecommerce-api/product-pictures',
+      }
+  })
+})
+export const usersPictureUpload = multer({
+  storage: new CloudinaryStorage({
+      cloudinary,
+      params: {
+          folder: 'ecommerce-api/product-pictures',
+      }
+  })
+})

@@ -1,8 +1,15 @@
 import express from "express";
-import productRouter from "./routes/products.js";
 import mongoose from "mongoose";
 import cors from "cors";
-import userRouter from "./routes/users.js";
+import "dotenv/config"
+
+import productRouter from "./routes/product.js";
+import adminRouter from "./routes/admin.js";
+import userRouter from "./routes/user.js";
+import orderRouter from "./routes/order.js";
+import deliveryRouter from "./routes/delivery.js";
+import discountRounter from "./routes/discount.js";
+import passwordRouter from "./routes/passwords.js";
 
 
 // create Db connection
@@ -16,19 +23,27 @@ mongoose
     console.log(err);
   });
 
-// Create an express app
 const app = express();
-
-// Use global middlewares
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 
-app.get("/", (req, res) => {
-  res.json({ message: "Welcome to the Naturalux API" });
+
+app.use((req, res, next) => {
+   console.log("Request Path:", req.path);
+  console.log("Request Method:", req.method);
+  console.log("Content-Type:", req.headers['content-type']);
+  console.log("Request Body:", req.body);
+  next();
 });
-// Use routes
-app.use("/api/v1", productRouter);
-app.use("/api/v1", userRouter);
+// app.use(productRouter);
+app.use(userRouter);
+app.use(adminRouter);
+app.use(discountRounter)
+app.use(productRouter);
+app.use(passwordRouter)
+app.use(deliveryRouter);
+app.use(orderRouter);
 
 // listen for incoming request
 const port = process.env.PORT || 7019;

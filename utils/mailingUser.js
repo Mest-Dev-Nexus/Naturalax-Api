@@ -1,18 +1,18 @@
 import nodemailer from "nodemailer";
 
-export const transporter = nodemailer.createTransport({
-    host:'smtp.gmail.com',
-    port: 587,
-    secure: false,
-    auth:{
-        user: process.env.USER_EMAIL,
-        pass: process.env.USER_PASSWORD
-    }
+const transporter = nodemailer.createTransport({
+  service : "gmail",
+  port : 587,
+  secure : false,
+  auth : {
+    user : process.env.USER_EMAIL,
+    pass: process.env.USER_PASSWORD
+  }
+});
+
     
-    });
     
-    
-    export const sendEmailSignup = async (to, subject, userName, role) => {
+    export const sendEmailSignup = async (to, subject, username) => {
         const emailTemplate = `<!DOCTYPE html>
       <html>
       <head>
@@ -53,15 +53,15 @@ export const transporter = nodemailer.createTransport({
       </head>
       <body>
           <div class="container">
-              <h1 class="header">Welcome ${userName}</h1>
+              <h1 class="header">Welcome ${username}</h1>
               <h1 class="header">Thank You for Signing Up!</h1>
-              <p class="message">We're excited to have you as part of our community as a ${role}. We hope you have an amazing experience discovering and connecting with Naturalux Solution.</p>
+              <p class="message">We're excited to have you as part of our community . We hope you have an amazing experience discovering and connecting with Naturalux Solution.</p>
               <p class="footer">If you have any questions, feel free to <a href="#">contact us</a>.</p>
           </div>
       </body>
       </html>
-      `
       
+      `
       const send = await transporter.sendMail (
         { from : process.env.USER_EMAIL,
           to : to,

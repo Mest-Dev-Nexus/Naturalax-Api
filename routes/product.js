@@ -7,9 +7,9 @@ import {
   updateProduct,
   deleteProduct,
   getProducts,
-} from "../controllers/products.js";
-import { productPicturesUpload } from "../middlewares/uploads.js";
-import { isAuthenticated, isAuthorized } from "../middlewares/auths.js";
+} from "../controllers/product.js";
+import { productPicturesUpload } from "../middlewares/upload.js";
+import { isAuthenticated, authorizeRole,authorizeAdmin, } from "../middlewares/auth.js";
 
 // Create products router
 const productRouter = Router();
@@ -18,7 +18,7 @@ const productRouter = Router();
 productRouter.post(
   "/products",
   isAuthenticated,
-  isAuthorized(["superadmin", "admin"]),
+  authorizeAdmin(["superadmin", "admin"]),
   productPicturesUpload.array("pictures", 3),
   addProduct
 );
@@ -38,7 +38,7 @@ productRouter.patch(
 productRouter.put(
   "/product/:id",
   isAuthenticated,
-  isAuthorized(["superadmin", "admin"]), // Added authorization check for consistency
+  authorizeAdmin(["superadmin", "admin"]), // Added authorization check for consistency
   productPicturesUpload.array("pictures", 3),
   replaceProduct
 );
@@ -46,7 +46,7 @@ productRouter.put(
 productRouter.delete(
   "/products/:id",
   isAuthenticated,
-  isAuthorized(["superadmin", "admin"]), // Added authorization check for consistency
+  authorizeAdmin(["superadmin", "admin"]), // Added authorization check for consistency
   deleteProduct
 );
 

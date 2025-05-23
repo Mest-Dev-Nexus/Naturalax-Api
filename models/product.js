@@ -24,4 +24,4 @@ const productSchema = new Schema(
 
 productSchema.plugin(normalize);
 
-export const productModel = model("Product", productSchema);
+export const ProductModel = model("Product", productSchema);
