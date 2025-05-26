@@ -1,8 +1,7 @@
 import express from "express";
+import dotenv from "dotenv";
 import mongoose from "mongoose";
 import cors from "cors";
-import "dotenv/config"
-
 import productRouter from "./routes/product.js";
 import adminRouter from "./routes/admin.js";
 import userRouter from "./routes/user.js";
@@ -11,7 +10,7 @@ import deliveryRouter from "./routes/delivery.js";
 import discountRounter from "./routes/discount.js";
 import passwordRouter from "./routes/passwords.js";
 
-
+dotenv.config();
 // create Db connection
 const connectionString = process.env.MONGO_URI;
 mongoose

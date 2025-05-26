@@ -1,6 +1,8 @@
 import { expressjwt } from "express-jwt";
 import { UserModel } from "../models/baseuser.js";
+import dotenv from "dotenv";
 
+dotenv.config();
 export const isAuthenticated = expressjwt({
   secret: process.env.JWT_SECRET_KEY,
   algorithms: ["HS256"],
