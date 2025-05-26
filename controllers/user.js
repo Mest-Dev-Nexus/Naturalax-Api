@@ -8,17 +8,27 @@ import { sendEmailSignup } from "../utils/mailingUser.js";
 export const registerUser = async (req, res, next) => {
   try {
     const image = req.file?.path;
-      
+
+    // Manually parse the address if it's a string
+    let address = req.body.address;
+    if (typeof address === 'string') {
+      try {
+        address = JSON.parse(address);
+      } catch (err) {
+        return res.status(400).json({ message: "Invalid address format" });
+      }
+    }
+
     const { error, value } = userValidationSchema.validate({
       ...req.body,
+      address,
       image,
     }, { abortEarly: false });
-    
+
     if (error) {
       return res.status(422).json(error);
     }
 
-    // Check if user already exists
     const existingUser = await UserModel.findOne({
       $or: [{ username: value.username }, { email: value.email }],
     });
@@ -27,31 +37,26 @@ export const registerUser = async (req, res, next) => {
       return res.status(409).json("User already exists");
     }
 
-    // Hash the password
     const hashedPassword = bcrypt.hashSync(value.password, 10);
 
-    // Create User with role explicitly set
     const newUser = await RegularUserModel.create({
       email: value.email,
       password: hashedPassword,
-      username: value.username, 
+      username: value.username,
       image: value.image,
       fullName: value.fullName,
       whatsappnumber: value.whatsappnumber,
       address: value.address,
-      role: "user" // Enforce User role
+      role: "user"
     });
 
-
-    // Send welcome email
     sendEmailSignup(
       newUser.email,
-      "Welcome to Yorkumi",
+      "Welcome to Naturalux Solutions",
       newUser.username,
       newUser.role
     );
 
-    // Generate token
     const accessToken = jwt.sign(
       { id: newUser.id, role: newUser.role },
       process.env.JWT_SECRET_KEY,
@@ -63,10 +68,11 @@ export const registerUser = async (req, res, next) => {
       accessToken,
     });
   } catch (error) {
-    console.error("Error during user registration:", error);
+    console.error("❌ Error during user registration:", error);
     next(error);
   }
 };
+
 
 export const loginUser = async (req, res, next) => {
   try {
